@@ -1,6 +1,7 @@
 package com.t1study.taskmanager.api.controller;
 
 import com.t1study.taskmanager.api.TaskApi;
+import com.t1study.taskmanager.dto.request.TaskRequest;
 import com.t1study.taskmanager.model.Task;
 import com.t1study.taskmanager.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,13 @@ public class TaskController implements TaskApi {
     }
 
     @Override
-    public ResponseEntity<Task> createTask(Task task) {
+    public ResponseEntity<Task> createTask(TaskRequest task) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(taskService.createTask(task));
     }
 
     @Override
-    public ResponseEntity<Void> updateTask(Long id, Task task) {
+    public ResponseEntity<Void> updateTask(Long id, TaskRequest task) {
         taskService.upgradeTask(id, task);
         return ResponseEntity.status(HttpStatus.OK)
                 .build();
