@@ -6,7 +6,6 @@ import com.t1study.taskmanager.mapper.TaskMapper;
 import com.t1study.taskmanager.model.Task;
 import com.t1study.taskmanager.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,13 +31,11 @@ public class TaskService {
         return taskRepository.save(TaskMapper.INSTANCE.toEntity(task));
     }
 
-    public void upgradeTask(Long id, TaskRequest task) {
-        try {
-            taskRepository.updateTaskById(id, task.title(),
-                    task.description(), task.dueDate(), task.completed());
-        } catch (EmptyResultDataAccessException e) {
-            throw new NotFoundException("Задача с id " + id + " не найдена"); //todo Ошибки выдать клиенту
-        }
+    public Task upgradeTask(Long id, TaskRequest taskRequest) {
+
+        Task task = getTaskById(id);
+        TaskMapper.INSTANCE.updateTaskFromRequest(taskRequest, task);
+        return taskRepository.save(task);
     }
 
     public void deleteTask(Long id) {

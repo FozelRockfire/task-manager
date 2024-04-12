@@ -36,15 +36,14 @@ public class TaskController implements TaskApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateTask(Long id, TaskRequest task) {
-        taskService.upgradeTask(id, task);
+    public ResponseEntity<Task> updateTask(Long id, TaskRequest task){
         return ResponseEntity.status(HttpStatus.OK)
-                .build();
+                .body(taskService.upgradeTask(id, task));
     }
 
     @Override
     public ResponseEntity<Void> deleteTask(Long id) {
         taskService.deleteTask(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: aopspring
+    name: task-manager
   jpa:
     hibernate:
       ddl-auto: validate

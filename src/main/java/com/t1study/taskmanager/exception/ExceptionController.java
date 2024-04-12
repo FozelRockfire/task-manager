@@ -1,7 +1,10 @@
 package com.t1study.taskmanager.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,9 +16,11 @@ import java.time.LocalDateTime;
 @Slf4j
 public class ExceptionController {
 
-    @ExceptionHandler(value = {NotFoundException.class})
+    @ExceptionHandler(value = {
+            NotFoundException.class
+    })
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public ResponseEntity<ErrorMessage> resourceNotFoundException(RuntimeException exception){
+    public ResponseEntity<ErrorMessage> resourceNotFoundException(RuntimeException exception) {
         log.error("resourceNotFoundException: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(ErrorMessage.builder()
@@ -25,9 +30,14 @@ public class ExceptionController {
                         .build());
     }
 
-    @ExceptionHandler(value = {IllegalArgumentException.class})
+    @ExceptionHandler(value = {
+            IllegalArgumentException.class,
+            InvalidMediaTypeException.class,
+            HttpMessageNotReadableException.class,
+            MethodArgumentNotValidException.class
+    })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorMessage> validationException(RuntimeException exception){
+    public ResponseEntity<ErrorMessage> validationException(RuntimeException exception) {
         log.error("validationException: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ErrorMessage.builder()
@@ -39,7 +49,7 @@ public class ExceptionController {
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<ErrorMessage> unexpectedErrorException(Exception exception){
+    public ResponseEntity<ErrorMessage> unexpectedErrorException(Exception exception) {
         log.error("unexpectedErrorException: {}", exception.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorMessage.builder()

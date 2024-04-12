@@ -88,7 +88,7 @@ public interface TaskApi {
                     message = "В случае внутренних ошибок",
                     response = ErrorResponse.class)
     })
-    ResponseEntity<Void> updateTask(
+    ResponseEntity<Task> updateTask(
             @Parameter(name = "id", description = "id Задачи", example = "1")
             @PathVariable Long id,
             @RequestBody TaskRequest task);
@@ -97,7 +97,7 @@ public interface TaskApi {
     @DeleteMapping("/{id}")
     @ApiResponses(value = {
             @ApiResponse(
-                    code = 200,
+                    code = 204,
                     message = "Задача удалена"),
             @ApiResponse(
                     code = 400,
