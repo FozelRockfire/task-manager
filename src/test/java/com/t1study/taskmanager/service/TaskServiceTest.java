@@ -4,6 +4,7 @@ import com.t1study.taskmanager.dto.request.TaskRequest;
 import com.t1study.taskmanager.exception.NotFoundException;
 import com.t1study.taskmanager.model.Task;
 import com.t1study.taskmanager.repository.TaskRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("TaskService тесты")
 class TaskServiceTest {
 
     @Mock
@@ -36,6 +38,7 @@ class TaskServiceTest {
             .build();
 
     @Test
+    @DisplayName("Успешное получение всех задач")
     void getAllTasks() {
         // given
         Task task2 = Task.builder()
@@ -65,6 +68,7 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное получение задачи по id")
     void getTaskById_IdExists_ReturnsTask() {
         // given
         doReturn(Optional.of(task1)).when(taskRepository).findById(1L);
@@ -84,6 +88,7 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Получение задачи по id с ошибкой: несуществующий id")
     void getTaskById_IdNotExist_ThrowsNotFoundException() {
         // given
         doReturn(Optional.empty()).when(taskRepository).findById(3L);
@@ -96,6 +101,7 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное создание задачи")
     void createTask() {
         // given
         TaskRequest taskRequest = TaskRequest.builder()
@@ -122,6 +128,7 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное обновление задачи")
     void upgradeTask() {
         // given
 
@@ -137,7 +144,7 @@ class TaskServiceTest {
                 LocalDate.now().plusDays(1), true)).when(taskRepository).save(any());
 
         // when
-        var result = taskService.upgradeTask(1L, updatedTaskRequest);
+        var result = taskService.updateTask(1L, updatedTaskRequest);
 
         // then
         assertEquals(1L, result.getId());
@@ -152,6 +159,7 @@ class TaskServiceTest {
     }
 
     @Test
+    @DisplayName("Успешное удаление задачи")
     void deleteTask() {
         // when
         taskService.deleteTask(1L);
@@ -160,5 +168,4 @@ class TaskServiceTest {
         verify(taskRepository).deleteById(1L);
         verifyNoMoreInteractions(taskRepository);
     }
-
 }

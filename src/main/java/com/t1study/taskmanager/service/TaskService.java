@@ -31,8 +31,7 @@ public class TaskService {
         return taskRepository.save(TaskMapper.INSTANCE.toEntity(task));
     }
 
-    public Task upgradeTask(Long id, TaskRequest taskRequest) {
-
+    public Task updateTask(Long id, TaskRequest taskRequest) {
         Task task = getTaskById(id);
         TaskMapper.INSTANCE.updateTaskFromRequest(taskRequest, task);
         return taskRepository.save(task);
