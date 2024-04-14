@@ -1,43 +1,19 @@
 package com.t1study.taskmanager.service;
 
 import com.t1study.taskmanager.dto.request.TaskRequest;
-import com.t1study.taskmanager.exception.NotFoundException;
-import com.t1study.taskmanager.mapper.TaskMapper;
 import com.t1study.taskmanager.model.Task;
-import com.t1study.taskmanager.repository.TaskRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
-public class TaskService {
+public interface TaskService {
 
-    private final TaskRepository taskRepository;
+    List<Task> getAllTasks();
 
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
-    }
+    Task getTaskById(Long id);
 
-    public Task getTaskById(Long id) {
-        return taskRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Задача с id " + id + " не найдена"));
-    }
+    Task createTask(TaskRequest task);
 
-    public Task createTask(TaskRequest task) {
-        return taskRepository.save(TaskMapper.INSTANCE.toEntity(task));
-    }
+    Task updateTask(Long id, TaskRequest taskRequest);
 
-    public Task updateTask(Long id, TaskRequest taskRequest) {
-        Task task = getTaskById(id);
-        TaskMapper.INSTANCE.updateTaskFromRequest(taskRequest, task);
-        return taskRepository.save(task);
-    }
-
-    public void deleteTask(Long id) {
-        taskRepository.deleteById(id);
-    }
+    void deleteTask(Long id);
 }

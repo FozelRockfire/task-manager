@@ -7,7 +7,9 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,6 +57,7 @@ public interface TaskApi {
             @Parameter(name = "id", description = "id Задачи", example = "1")
             @PathVariable Long id);
 
+    @Validated
     @Operation(summary = "Создать новую задачу")
     @PostMapping
     @ApiResponses(value = {
@@ -71,8 +74,10 @@ public interface TaskApi {
                     message = "В случае внутренних ошибок",
                     response = ErrorResponse.class)
     })
-    ResponseEntity<Task> createTask(@RequestBody TaskRequest task);
+    ResponseEntity<Task> createTask(
+            @Valid @RequestBody TaskRequest task);
 
+    @Validated
     @Operation(summary = "Обновить информацию о задаче")
     @PutMapping("/{id}")
     @ApiResponses(value = {
@@ -91,7 +96,7 @@ public interface TaskApi {
     ResponseEntity<Task> updateTask(
             @Parameter(name = "id", description = "id Задачи", example = "1")
             @PathVariable Long id,
-            @RequestBody TaskRequest task);
+            @Valid @RequestBody TaskRequest task);
 
     @Operation(summary = "Удалить задачу")
     @DeleteMapping("/{id}")
