@@ -18,7 +18,6 @@
 
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<flyaway.version>10.10.0</flyaway.version>
-		<restassured.version>5.4.0</restassured.version>
 
 		<springdoc.version>2.5.0</springdoc.version>
 		<swagger-annotations.version>1.6.14</swagger-annotations.version>

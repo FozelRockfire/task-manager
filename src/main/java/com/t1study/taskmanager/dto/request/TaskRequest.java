@@ -14,7 +14,7 @@ public record TaskRequest(
         @Schema(description = "Название задачи",
                 example = "Создать простую систему управления задачами")
         @NotBlank(message = "Имя задачи не может быть пустым")
-        @Max(value = 250, message = "Имя задачи не должно превышать 250 символов.")
+        @Max(value = 255, message = "Имя задачи не должно превышать 250 символов.")
         String title,
 
         @Schema(description = "Описание задачи",

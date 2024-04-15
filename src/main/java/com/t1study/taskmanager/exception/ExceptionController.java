@@ -1,6 +1,7 @@
 package com.t1study.taskmanager.exception;
 
 import io.swagger.v3.oas.annotations.Hidden;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -38,6 +39,7 @@ public class ExceptionController {
             InvalidMediaTypeException.class,
             HttpMessageNotReadableException.class,
             MethodArgumentNotValidException.class,
+            ConstraintViolationException.class,
             ValidationException.class
     })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

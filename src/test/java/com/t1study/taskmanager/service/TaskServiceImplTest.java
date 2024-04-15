@@ -4,6 +4,7 @@ import com.t1study.taskmanager.dto.request.TaskRequest;
 import com.t1study.taskmanager.exception.NotFoundException;
 import com.t1study.taskmanager.model.Task;
 import com.t1study.taskmanager.repository.TaskRepository;
+import com.t1study.taskmanager.service.impl.TaskServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ class TaskServiceImplTest {
     private TaskRepository taskRepository;
 
     @InjectMocks
-    private TaskService taskService;
+    private TaskServiceImpl taskService;
 
     Task task1 = Task.builder()
             .id(1L)
